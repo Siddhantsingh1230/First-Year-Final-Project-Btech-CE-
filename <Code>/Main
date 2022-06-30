@@ -1,0 +1,802 @@
+//_________________________________
+// Created By Siddhant Singh
+//First Year Final Project
+//_________________________________
+// Header Files Declaration..
+#include<stdio.h>
+#include <iostream>
+#include<iomanip>
+#include<string.h>
+#include<stdlib.h>
+#include<windows.h>
+#include<conio.h>
+#include<fstream>
+
+
+using namespace std;
+// GOTO FX ----------------
+void gotoxy(int x, int y) {
+COORD pos = {x, y};
+SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+}
+//----------------------------------------------------------------------------------------------------------------------------------
+//CLASS DECLARATIONS
+class input
+{
+public :
+    char str[100];
+    int num;
+    int k[100];
+
+};
+
+class number: public input
+{
+    public:
+    void knumber();
+    number(){};
+};
+class string_op: public input
+{
+    public:
+    void kbinary();
+    string_op(){};
+
+};
+class morse
+{
+    private:
+    char string[100];
+    public:
+    friend void kmorsecode(morse obj);
+    morse(){};
+};
+class encodeco
+{
+    private:
+    char  userString[100],encryptedString[100],decryptedString[100],userString2[100];
+    public:
+    void encdec();
+    encodeco()
+    {
+      cout<<setw(68)<<"                                                "<<"________________ "<<endl<<endl;
+    }
+
+};
+//--------------------------------------------------------------------------------------------------------------------------------------
+//EXTRAS ----------------
+void kheart();
+void Title();
+void endtitle();
+// MAIN FX --------------
+int main()
+{
+
+
+again:
+    HANDLE h =GetStdHandle(STD_OUTPUT_HANDLE);
+    Title();
+    int i,j,choice;
+    char k[100];
+    char ch;
+
+    cout<<endl;
+    cout<<setw(55)<<"                                 "<<"* * * * * * * *                   * * * * * * * *";
+    cout <<setw(55)<<"                                 "<<endl;
+    for(i=1; i<=2; i++)
+    {
+        cout<<setw(55)<<"                                 "<<"*                                               *";
+        cout<<setw(55)<<"                                 "<<"\n";
+    }
+    cout<<setw(55)<<"                                 "<<"*            1.Text To Binary                   *\n";
+    cout<<setw(55)<<"                                 "<<"*            2.Number To Binary                 *\n";
+    cout<<setw(55)<<"                                 "<<"*            3.Encrypt/Decrypt                  *\n";
+    cout<<setw(55)<<"                                 "<<"*            4.MorseCode                        *\n";
+    cout<<setw(55)<<"                                 "<<"*              ____________                     *\n";
+    cout<<setw(55)<<"                                 "<<"         Enter Choice of Operation:              \n";
+    cout<<setw(55)<<"                                 "<<"              ---> ";
+    cin>>choice;
+    cout<<setw(55)<<"                                 "<<"               ____________                      \n";
+    switch(choice)
+    {
+    case 1:
+        {
+            string_op s1;
+            s1.kbinary();
+        }
+        break;
+    case 2:
+        {
+            number n1;
+            n1.knumber();
+        }
+        break;
+    case 3:
+        {
+            encodeco e1;
+            e1.encdec();
+        }
+        break;
+    case 4:
+        {
+            morse m1;
+            kmorsecode(m1);
+        }
+
+        break;
+    default:
+        cout<<setw(55)<<"                                 "<<"*             !Invalid Input!                   *";
+    }
+
+    cout<<endl;
+    if(choice==1 || choice==2)
+    {
+
+       kheart();
+    }
+
+    for(i=0; i<=6; i++)
+    {
+        cout<<setw(55)<<"                                 "<<"*                                               *";
+        cout<<setw(55)<<"                                 "<<"\n";
+    }
+    cout<<setw(55)<<"                                 "<<"* * * * * * * *                   * * * * * * * *";
+    cout<<endl;
+    cout<<setw(65)<<"                                 "<<"Want To Run Program Again:";
+    cout<<"Y/N -";
+    cin>>ch;
+    cout<<endl;
+    if (ch=='y'||ch=='Y')
+    {
+        system("CLS");
+        goto again;
+    }
+    else
+        endtitle();
+
+
+    return 0;
+}
+//FUNCTION DEFINITIONS
+void string_op:: kbinary()
+{
+
+    ofstream fileout; // TO CREATE A FILE
+    fileout.open("BINARY DATA.txt"); //FILE TITLE
+    fileout<<"ASCII NUMBER\n";
+
+    char str[100];
+    int val[100];
+    int i,j,k[100],len;
+    cout <<setw(55)<<"                                 "<<"  Enter Your Text(No Space Allowed):             \n";
+    cout <<setw(55)<<"                                 "<<"   --->";
+    cin>>str;
+    cout<<endl;
+    len=strlen(str);
+    cout <<setw(55)<<"                                 "<<"  String Length:"<<len<<endl;
+    cout<<endl;
+    for(i=0; i<=len; i++)
+    {
+        val[i]=str[i];
+    }
+    cout <<setw(55)<<"                                 "<<"  ------------\n";
+    cout <<setw(55)<<"                                 "<<"  ASCII VALUE:\n";
+    cout <<setw(55)<<"                                 "<<"\n";
+    cout <<setw(57)<<"                                 ";
+    for(i=0; i<=(len-1); i++)
+    {
+
+        cout<<val[i]<<" ";
+        fileout<<val[i]<<" ";
+    }
+    fileout<<"\nBINARY OF TEXT"<<endl;
+    cout<<endl;
+    cout <<setw(55)<<"                                 "<<"  ------------\n";
+    cout<<endl;
+    cout <<setw(55)<<"                                 "<<"  Binary:\n";
+    cout <<setw(55)<<"                                 "<<"  ------------\n";
+    cout <<setw(55)<<"                                 "<<"  ";
+
+    for(i=0; i<=(len-1); i++)
+    {
+        for(j=0; val[i]>0; j++)
+        {
+            k[j]=val[i]%2;
+            val[i]=val[i]/2;
+        }
+        for(j=j-1; j>=0; j--)
+        {
+            cout <<k[j];
+            fileout<<k[j];
+
+        }
+        cout<<" ";
+        fileout<<endl;
+
+    }
+    fileout.close();
+    cout<<endl;
+    cout<<setw(55)<<"                                 "<<"  ------------\n\n";
+    cout<<setw(65)<<"                                 "<<"  [YOUR DATA SAVED IN THE FILE]\n";
+}
+void kheart()
+{
+    int i, j, n=5;
+    HANDLE h =GetStdHandle(STD_OUTPUT_HANDLE);
+    for(i=n/2; i<=n; i+=2)
+    {
+
+        cout<<setw(77);
+        for(j=1; j<n-i; j+=2)
+        {
+            Sleep(130);
+            cout<<" ";
+        }
+        for(j=1; j<=i; j++)
+        {
+            Sleep(130);
+
+            SetConsoleTextAttribute(h,4);
+            cout<<("*");
+        }
+        for(j=1; j<=n-i; j++)
+        {
+            Sleep(130);
+            cout<<" ";
+        }
+        for(j=1; j<=i; j++)
+        {
+            Sleep(100);
+            cout<<("*");
+        }
+        Sleep(100);
+        cout<<"\n";
+    }
+    for(i=n; i>=1; i--)
+    {
+        cout<<setw(77);
+        for(j=i; j<n; j++)
+        {
+            Sleep(100);
+            cout<<" ";
+        }
+        for(j=1; j<=(i*2)-1; j++)
+        {
+            Sleep(100);
+            cout<<("*");
+        }
+        cout<<"\n";
+    }
+    SetConsoleTextAttribute(h,7);// TO SET DEFAULT COLOR WHITE
+}
+void number:: knumber()
+{
+    int i,j;
+    cout<<setw(55)<<"                                 "<<"     Enter A Number(No Space Allowed)            \n";
+    cout<<setw(55)<<"                                 "<<"             --->";
+    cin>>num;
+    cout<<endl;
+    cout<<setw(55)<<"                                 "<<"       Mirrored Binary:\n";
+    cout<<setw(55)<<"                                 "<<"       ";
+    for(j=0; num>0; j++)
+    {
+        k[j]=num%2;
+        num=num/2;
+        cout<<k[j];
+    }
+    cout<<endl;
+    cout<<setw(55)<<"                                 "<<"       BINARY:";
+    cout<<"\n       ";
+    cout<<setw(55)<<"                                 ";
+    for(j=j-1;j>=0;j--)
+    {
+        cout<<k[j];
+
+    }
+}
+void encodeco:: encdec()
+{
+
+    int i;
+    char cho;
+    cout<<setw(55)<<"                                 "<<"               1.Encrypt\n";
+    cout<<setw(55)<<"                                 "<<"               2.Decrypt\n";
+    int decision;
+    cout<<setw(55)<<"                                 "<<"             ---> ";
+    cin>>decision;
+    switch(decision)
+    {
+    case 1:
+    {
+        cout<<setw(55)<<"                                 "<<"           Enter string to Encrypt: \n";
+        cout<<setw(55)<<"                                 "<<"             ---> ";
+        cin>>userString;
+        for (i=0; userString[i]!='\0'; i++)
+        {
+            cho=userString[i];
+            switch (cho)
+            {
+            case ' ':
+                encryptedString[i]=';';
+                break;
+            case 'a':
+                encryptedString[i]='!';
+                break;
+            case 'b':
+                encryptedString[i]='@';
+                break;
+            case 'c':
+                encryptedString[i]='#';
+                break;
+            case 'd':
+                encryptedString[i]='$';
+                break;
+            case 'e':
+                encryptedString[i]='%';
+                break;
+            case 'f':
+                encryptedString[i]='^';
+                break;
+            case 'g':
+                encryptedString[i]='&';
+                break;
+            case 'h':
+                encryptedString[i]='*';
+                break;
+            case 'i':
+                encryptedString[i]='(';
+                break;
+            case 'j':
+                encryptedString[i]=')';
+                break;
+            case 'k':
+                encryptedString[i]='~';
+                break;
+            case 'l':
+                encryptedString[i]='-';
+                break;
+            case 'm':
+                encryptedString[i]='+';
+                break;
+            case 'n':
+                encryptedString[i]='=';
+                break;
+            case 'o':
+                encryptedString[i]='1';
+                break;
+            case 'p':
+                encryptedString[i]='0';
+                break;
+            case 'q':
+                encryptedString[i]='[';
+                break;
+            case 'r':
+                encryptedString[i]='{';
+                break;
+            case 's':
+                encryptedString[i]=']';
+                break;
+            case 't':
+                encryptedString[i]='}';
+                break;
+            case 'u':
+                encryptedString[i]='D';
+                break;
+            case 'v':
+                encryptedString[i]='Z';
+                break;
+            case 'w':
+                encryptedString[i]='R';
+                break;
+            case 'x':
+                encryptedString[i]='Y';
+                break;
+            case 'y':
+                encryptedString[i]='/';
+                break;
+            case 'z':
+                encryptedString[i]='E';
+                break;
+            default:
+                cout<<setw(70)<<"                                             "<<"Invalid string\n";
+                break;
+            }
+        }
+        cout<<setw(55)<<"                                 "<<"     ________________________________\n";
+        cout<<setw(55)<<"                                 "<<"      String is Encrypted successfully!\n";
+        cout<<setw(55)<<"                                 "<<"     ---> "<<encryptedString<<endl;
+        cout<<setw(55)<<"                                 "<<"     ________________________________\n";
+        encryptedString[1000]=0;
+        break;
+    }
+
+    case 2:
+    {
+        int i=0;
+        char cho;
+        cout<<endl;
+        cout<<setw(55)<<"                                 "<<"      Enter Encrypted string to decrypt\n ";
+        cout<<setw(55)<<"                                 "<<"      ----> ";
+        cin>>userString2;
+        for (i=0; userString2[i]!='\0'; i++)
+        {
+            cho=userString2[i];
+            switch (cho)
+            {
+            case ';':
+                decryptedString[i]=' ';
+                break;
+            case '!':
+                decryptedString[i]='a';
+                break;
+            case '@':
+                decryptedString[i]='b';
+                break;
+            case '#':
+                decryptedString[i]='c';
+                break;
+            case '$':
+                decryptedString[i]='d';
+                break;
+            case '%':
+                decryptedString[i]='e';
+                break;
+            case '^':
+                decryptedString[i]='f';
+                break;
+            case '&':
+                decryptedString[i]='g';
+                break;
+            case '*':
+                decryptedString[i]='h';
+                break;
+            case '(':
+                decryptedString[i]='i';
+                break;
+            case ')':
+                decryptedString[i]='j';
+                break;
+            case '~':
+                decryptedString[i]='k';
+                break;
+            case '-':
+                decryptedString[i]='l';
+                break;
+            case '+':
+                decryptedString[i]='m';
+                break;
+            case '=':
+                decryptedString[i]='n';
+                break;
+            case '1':
+                decryptedString[i]='o';
+                break;
+            case '0':
+                decryptedString[i]='p';
+                break;
+            case '[':
+                decryptedString[i]='q';
+                break;
+            case '{':
+                decryptedString[i]='r';
+                break;
+            case ']':
+                decryptedString[i]='s';
+                break;
+            case '}':
+                decryptedString[i]='t';
+                break;
+            case 'D':
+                decryptedString[i]='u';
+                break;
+            case 'Z':
+                decryptedString[i]='v';
+                break;
+            case 'R':
+                decryptedString[i]='w';
+                break;
+            case 'Y':
+                decryptedString[i]='x';
+                break;
+            case '/':
+                decryptedString[i]='y';
+                break;
+            case 'E':
+                decryptedString[i]='z';
+                break;
+            default:
+                cout<<setw(70)<<"                                             "<<"Invalid string\n";
+                break;
+            }
+
+        }
+        cout<<setw(57)<<"                                 "<<"     ________________________________\n";
+        cout<<setw(57)<<"                                 "<<"     String is decrypted successfully!\n";
+        cout<<setw(57)<<"                                 "<<"       ---->  "<<decryptedString;
+        cout<<endl;
+        cout<<setw(57)<<"                                 "<<"     ________________________________\n";
+        decryptedString[1000]=0;
+        break;
+    }
+
+
+    default:
+        cout<<setw(55)<<"                                 "<<"Invalid String Operation\n";
+        break;
+    }
+}
+void  kmorsecode(morse obj)
+{
+    HANDLE h =GetStdHandle(STD_OUTPUT_HANDLE);
+    ofstream fileout; // TO CREATE A FILE
+    fileout.open("MORSE DATA.txt"); //FILE TITLE
+    fileout<<"--YOUR MORSE CODE--\n";
+    int i=0;
+    char cho;
+    cout<<endl;
+    cout<<setw(55)<<"                                 "<<"     Enter String To Covert into Morse \n ";
+    cout<<setw(55)<<"                                 "<<"      ----> ";
+    cin>>obj.string;
+    cout<<endl;
+    cout<<setw(59)<<"                                 "<<"     ________________________________";
+    cout<<endl;
+    cout<<endl;
+    for (i=0; obj.string[i]!='\0'; i++)
+    {
+        cho=obj.string[i];
+        cout<<setw(59)<<"                                 ";
+        cout<<"                   ";
+        SetConsoleTextAttribute(h,9);
+        switch (cho)
+        {
+        case 'a':
+            cout<< ".-";
+            fileout<< ".-";
+            fileout<<endl;
+            break;
+        case 'b':
+            cout<< "-...";
+            fileout<< "-...";
+            fileout<<endl;
+            break;
+        case 'c':
+            cout<<"-.-.";
+            fileout<< "-.-.";
+            fileout<<endl;
+            break;
+        case 'd':
+            cout<< "-..";
+            fileout<< "-..";
+            fileout<<endl;
+            break;
+        case 'e':
+            cout<< ".";
+            fileout<< ".";
+            fileout<<endl;
+            break;
+        case 'f':
+            cout<< "..-.";
+            fileout<< "..-.";
+            fileout<<endl;
+            break;
+        case 'g':
+            cout<< "--.";
+            fileout<< "--.";
+            fileout<<endl;
+            break;
+        case 'h':
+            cout<< "....";
+            fileout<< "....";
+            fileout<<endl;
+            break;
+        case 'i':
+            cout<< "..";
+            fileout<< "..";
+            fileout<<endl;
+            break;
+        case 'j':
+            cout<<".---";
+            fileout<< ".---";
+            fileout<<endl;
+            break;
+        case 'k':
+            cout<< "-.-";
+            fileout<< "-.-";
+            fileout<<endl;
+            break;
+        case 'l':
+            cout<< ".-..";
+            fileout<< ".-..";
+            fileout<<endl;
+            break;
+        case 'm':
+            cout<< "--";
+            fileout<< "--";
+            fileout<<endl;
+            break;
+        case 'n':
+            cout<< "-.";
+            fileout<< "-.";
+            fileout<<endl;
+            break;
+        case 'o':
+            cout<< "---";
+            fileout<< "---";
+            fileout<<endl;
+            break;
+        case 'p':
+            cout<< ".--.";
+            fileout<< ".--.";
+            fileout<<endl;
+            break;
+        case 'q':
+            cout<< "--.-";
+            fileout<< "--.-";
+            fileout<<endl;
+            break;
+        case 'r':
+            cout<< ".-.";
+            fileout<< ".-.";
+            fileout<<endl;
+            break;
+        case 's':
+            cout<< "...";
+            fileout<< "...";
+            fileout<<endl;
+            break;
+        case 't':
+            cout<< "-";
+            fileout<< "-";
+            fileout<<endl;
+            break;
+        case 'u':
+            cout<< "..-";
+            fileout<< "..-";
+            fileout<<endl;
+            break;
+        case 'v':
+            cout<< "...-";
+            fileout<< "...-";
+            fileout<<endl;
+            break;
+        case 'w':
+            cout<< ".--";
+            fileout<< ".--";
+            fileout<<endl;
+            break;
+        case 'x':
+            cout<< "-..-";
+            fileout<< "-..-";
+            fileout<<endl;
+            break;
+        case 'y':
+            cout<< "-.--";
+             fileout<<  "-.--";
+             fileout<<endl;
+            break;
+        case 'z':
+            cout<< "--..";
+            fileout<<  "--..";
+            fileout<<endl;
+            break;
+        case '1':
+            cout<< ".----";
+            fileout<<  ".----";
+            fileout<<endl;
+            break;
+        case '2':
+            cout<< "..---";
+            fileout<<  "..---";
+            fileout<<endl;
+            break;
+        case '3':
+            cout<< "...--";
+            fileout<<  "...--";
+            fileout<<endl;
+            break;
+        case '4':
+            cout<< "....-";
+            fileout<<  "....-";
+            fileout<<endl;
+            break;
+        case '5':
+            cout<< ".....";
+            fileout<<  ".....";
+            fileout<<endl;
+            break;
+        case '6':
+            cout<< "-....";
+            fileout<<  "-....";
+            fileout<<endl;
+            break;
+        case '7':
+            cout<< "--...";
+            fileout<<  "--...";
+            fileout<<endl;
+            break;
+        case '8':
+            cout<< "---..";
+            fileout<<  "---..";
+            fileout<<endl;
+            break;
+        case '9':
+            cout<< "----.";
+            fileout<<  "----.";
+            fileout<<endl;
+            break;
+        case '0':
+            cout<< "-----";
+            fileout<<  "-----";
+            fileout<<endl;
+            break;
+        default:
+            cout<<endl;
+            cout<<setw(66)<<"                                 "<<"      Invalid Character " <<endl;
+            break;
+        }
+
+        cout<<"\n";
+
+    }
+    SetConsoleTextAttribute(h,7);// TO SET DEFAULT COLOR WHITE
+    fileout.close();
+    cout<<"\n\n";
+    cout<<setw(59)<<"                                 "<<"     Morse Code created successfully!\n\n";
+    cout<<setw(63)<<"                                 "<<"     Morse Code Saved To File!\n";
+    cout<<"\n";
+    cout<<setw(59)<<"                                 "<<"     ________________________________\n";
+}
+void Title()
+{
+    HANDLE h =GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(h,10);
+     cout<<setw(54)<<"                                 "<<"  ____           _        __  __       _ "<<endl<<setw(54)<<"                                 "
+     <<" / ____|        | |      |  \\/  |     | |"<<endl<<setw(54)<<"                                 "
+     <<"| |     ___   __| | ___  | \\  / | __ _| | _____ _ __"<<endl<<setw(54)<<"                                 "
+     <<"| |    / _ \\ / _` |/ _ \\ | |\\/| |/ _` | |/ / _ \\ '__|"<<endl<<setw(54)<<"                                 "
+     <<"| |___| (_) | (_| |  __/ | |  | | (_| |   <  __/ |"<<endl<<setw(54)<<"                                 "
+     <<" \\_____\\___/ \\__,_|\\___| |_|  |_|\\__,_|_|\\_\\___|_|"<<endl;
+
+SetConsoleTextAttribute(h,7);// TO SET DEFAULT COLOR WHITE
+
+
+}
+
+void endtitle()
+{
+
+  HANDLE h =GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(h,10);
+  cout<<setw(48)<<"                                  "<<"  _______ _    _          _   _ _  __        __     ______  _    _"<<endl<<setw(48)<<"                                 "
+ <<" |__   __| |  | |   /\\   | \\ | | |/ /        \\ \\   / / __ \\| |  | |"<<endl<<setw(48)<<"                                 "
+ <<"    | |  | |__| |  /  \\  |  \\| | ' /          \\ \\_/ / |  | | |  | |"<<endl<<setw(48)<<"                                 "
+ <<"    | |  |  __  | / /\\ \\ | . ` |  <            \\   /| |  | | |  | |"<<endl<<setw(48)<<"                                 "
+ <<"    | |  | |  | |/ ____ \\| |\\  | . \\            | | | |__| | |__| |"<<endl<<setw(48)<<"                                 "
+ <<"    |_|  |_|  |_/_/    \\_\\_| \\_|_|\\_\\           |_|  \\____/ \\____/ "<<endl;
+
+SetConsoleTextAttribute(h,7);// TO SET DEFAULT COLOR WHITE
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
